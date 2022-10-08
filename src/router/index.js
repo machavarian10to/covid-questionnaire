@@ -10,11 +10,11 @@ const router = createRouter({
       name: "home",
       component: TheWelcome,
     },
-    // {
-    //   path: "/thanks",
-    //   name: "thanks",
-    //   component: () => import("../pages/TheThanks.vue"),
-    // },
+    {
+      path: "/thanks",
+      name: "thanks",
+      component: () => import("../pages/TheThanks.vue"),
+    },
   ],
 });
 
