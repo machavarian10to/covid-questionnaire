@@ -1,13 +1,3 @@
 <template>
-  <the-welcome></the-welcome>
+  <router-view></router-view>
 </template>
-
-<script>
-import TheWelcome from "./pages/TheWelcome.vue";
-
-export default {
-  components: {
-    TheWelcome,
-  },
-};
-</script>
