@@ -1,6 +1,14 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
-  <div class="bg-image">
+  <div
+    class="
+      relative
+      bg-custom-image
+      w-[1920px]
+      h-[1080px]
+      bg-center bg-no-repeat bg-cover
+    "
+  >
     <div
       v-if="showText"
       class="
@@ -54,16 +62,6 @@ export default {
 </script>
 
 <style scoped>
-.bg-image {
-  background-image: url("../assets/thanks.svg");
-  width: 1920px;
-  height: 1080px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
-}
-
 .text-enter-from,
 .top-star-enter-from,
 .bottom-star-enter-from {

@@ -9,6 +9,9 @@ module.exports = {
       colors: {
         "custom-color": "#EAEAEA",
       },
+      backgroundImage: {
+        "custom-image": "url('@/assets/thanks.svg')",
+      },
     },
   },
   plugins: [],
