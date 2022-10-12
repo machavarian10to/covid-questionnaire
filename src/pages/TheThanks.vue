@@ -3,7 +3,7 @@
   <div
     class="
       relative
-      bg-custom-image
+      bg-thanks-image
       w-[1920px]
       h-[1080px]
       bg-center bg-no-repeat bg-cover
@@ -26,7 +26,7 @@
       <transition name="top-star">
         <img
           v-if="showStars"
-          src="../assets/star.svg"
+          src="@/assets/star.svg"
           class="w-[50px] h-[50px] absolute bottom-[100px] left-[40px]"
         />
       </transition>
@@ -34,7 +34,7 @@
       <transition name="bottom-star">
         <img
           v-if="showStars"
-          src="../assets/star.svg"
+          src="@/assets/star.svg"
           class="w-[30px] h-[30px] absolute top-[100px] right-[40px]"
         />
       </transition>
