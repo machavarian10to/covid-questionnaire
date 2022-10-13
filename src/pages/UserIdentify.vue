@@ -1,20 +1,18 @@
 <template>
   <base-container page="1">
     <div>
-      <Form @submit="redirect" v-slot="{ meta, errors }">
+      <Form @submit="redirect" v-slot="{ meta }">
         <base-input label="სახელი*" title="name">
           <Field
             id="name"
             name="name"
             type="text"
-            :rules="validateName"
+            rules="required:სახელი|min_max:სახელი,3,255|alpha:სახელი"
             :class="inputStyling"
             :value="name"
             @input="changeName"
           />
-          <p v-if="errors.name" class="text-error-color">
-            {{ errors.name }}
-          </p>
+          <ErrorMessage class="text-error-color" name="name" />
         </base-input>
 
         <base-input label="გვარი*" title="surname">
@@ -22,14 +20,12 @@
             id="surname"
             name="surname"
             type="text"
-            :rules="validateSurname"
+            rules="required:გვარი|min_max:გვარი,3,255|alpha:გვარი"
             :class="inputStyling"
             :value="surname"
             @input="changeLastName"
           />
-          <p v-if="errors.surname" class="text-error-color">
-            {{ errors.surname }}
-          </p>
+          <ErrorMessage class="text-error-color" name="surname" />
         </base-input>
 
         <base-input label="მეილი*" title="email">
@@ -37,14 +33,12 @@
             id="email"
             name="email"
             type="email"
-            :rules="validateEmail"
+            rules="required:მეილი|email|redberry_email"
             :class="inputStyling"
             :value="email"
             @input="changeEmail"
           />
-          <p v-if="errors.email" class="text-error-color">
-            {{ errors.email }}
-          </p>
+          <ErrorMessage class="text-error-color" name="email" />
         </base-input>
 
         {{ checkIfUserIdentify(meta) }}
@@ -76,14 +70,15 @@
 </template>
 
 <script>
-import { Field, Form } from "vee-validate";
+import { Field, Form, ErrorMessage } from "vee-validate";
 import AsteriskTip from "../components/simplify/AsteriskTip.vue";
+import BaseInput from "../components/ui/BaseInput.vue";
+import BaseBackground from "../components/ui/BaseBackground.vue";
 export default {
   data() {
     return {
       userIdentified: false,
       showLogo: false,
-      regex: /^[A-Za-z]+$/,
       name: this.$store.getters.getName,
       surname: this.$store.getters.getLastName,
       email: this.$store.getters.getEmail,
@@ -100,7 +95,10 @@ export default {
   components: {
     Form,
     Field,
+    ErrorMessage,
     AsteriskTip,
+    BaseInput,
+    BaseBackground,
   },
   methods: {
     changeName(e) {
@@ -112,55 +110,11 @@ export default {
     changeEmail(e) {
       this.$store.dispatch("changeEmail", { value: e.target.value });
     },
-    validateName(value) {
-      if (!value) {
-        return "სახელის ველი სავალდებულოა";
-      }
-
-      if (value.length < 3) {
-        return "სახელის ველი უნდა შედგებოდეს მინიმუმ 3 სიმბოლოსგან";
-      }
-
-      if (!this.regex.test(value)) {
-        return "სახელის ველი უნდა შეიცავდეს მხოლოდ ანბანის ასოებს";
-      }
-      return true;
-    },
-    validateSurname(value) {
-      if (!value) {
-        return "გვარის ველი სავალდებულოა";
-      }
-
-      if (value.length < 3) {
-        return "გვარის ველი უნდა შედგებოდეს მინიმუმ 3 სიმბოლოსგან";
-      }
-
-      if (!this.regex.test(value)) {
-        return "გვარის ველი უნდა შეიცავდეს მხოლოდ ანბანის ასოებს";
-      }
-
-      return true;
-    },
-    validateEmail(value) {
-      if (!value) {
-        return "მეილის ველი სავალდებულოა";
-      }
-
-      if (!value.includes("@")) {
-        return "თქვენ მიერ შეყვანილი მეილი არასწორია";
-      }
-
-      const regex = /^[A-Z0-9._%+-]+@redberry.ge/i;
-      if (!regex.test(value)) {
-        return "გთხოვთ დარეგისტრირდეთ Redberry-ს მეილით (youremail@redberry.ge)";
-      }
-      return true;
-    },
     checkIfUserIdentify(meta) {
       meta.valid ? (this.userIdentified = true) : (this.userIdentified = false);
     },
     redirect() {
-      return this.$router.push("/covid");
+      return this.$router.push({ name: "covid" });
     },
   },
 };

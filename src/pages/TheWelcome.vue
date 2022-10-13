@@ -13,7 +13,7 @@
         <transition name="text">
           <router-link
             v-if="showText"
-            to="/identify"
+            :to="{ name: 'identify' }"
             class="font-bold text-[30px] hover:drop-shadow-[3px_2px_0px_rgba(150,150,150,1)]"
           >
             კითხვარის დაწყება
@@ -25,6 +25,8 @@
 </template>
 s
 <script>
+import identify from "../store/identify";
+
 export default {
   data() {
     return {

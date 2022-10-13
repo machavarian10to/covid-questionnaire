@@ -98,7 +98,7 @@
             v-slot="{ field }"
             name="date"
             id="date"
-            :rules="validateDate"
+            rules="required:თარიღი"
             :value="covidSicknessDate"
             @input="changeCovidSicknessDate"
           >
@@ -145,11 +145,17 @@
 <script>
 import { Field, Form } from "vee-validate";
 import RadioWrapper from "../components/simplify/RadioWrapper.vue";
+import BaseTitle from "@/components/ui/BaseTitle.vue";
+import BaseBackground from "@/components/ui/BaseBackground.vue";
+import BaseLink from "@/components/ui/BaseLink.vue";
 export default {
   components: {
     Form,
     Field,
     RadioWrapper,
+    BaseTitle,
+    BaseBackground,
+    BaseLink,
   },
   data() {
     return {
@@ -166,12 +172,6 @@ export default {
   methods: {
     checkData(meta) {
       meta.valid ? (this.dataIsValid = true) : (this.dataIsValid = false);
-    },
-    validateDate(value) {
-      if (!value) {
-        return "ეს ველი სავალდებულოა";
-      }
-      return true;
     },
     redirect() {
       this.$router.push("/");
