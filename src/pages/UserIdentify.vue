@@ -7,7 +7,7 @@
             id="name"
             name="name"
             type="text"
-            rules="required:სახელი|min_max:სახელი,3,255|alpha:სახელი"
+            rules="required|min:3|max:255|alpha"
             :class="inputStyling"
             :value="name"
             @input="changeName"
@@ -20,7 +20,7 @@
             id="surname"
             name="surname"
             type="text"
-            rules="required:გვარი|min_max:გვარი,3,255|alpha:გვარი"
+            rules="required|min:3|max:255|alpha"
             :class="inputStyling"
             :value="surname"
             @input="changeLastName"
@@ -33,7 +33,7 @@
             id="email"
             name="email"
             type="email"
-            rules="required:მეილი|email|redberry_email"
+            rules="required|email|redberry_email"
             :class="inputStyling"
             :value="email"
             @input="changeEmail"
@@ -51,11 +51,10 @@
       <base-background class="bg-identify-image"></base-background>
 
       <transition>
-        <img
+        <yellow-square
           v-if="showLogo"
-          src="@/assets/yellow-bg.png"
           class="opacity-80 absolute top-[400px] right-[300px]"
-        />
+        ></yellow-square>
       </transition>
 
       <div class="flex justify-start">
@@ -71,9 +70,10 @@
 
 <script>
 import { Field, Form, ErrorMessage } from "vee-validate";
-import AsteriskTip from "../components/simplify/AsteriskTip.vue";
-import BaseInput from "../components/ui/BaseInput.vue";
-import BaseBackground from "../components/ui/BaseBackground.vue";
+import AsteriskTip from "@/components/simplify/AsteriskTip.vue";
+import BaseInput from "@/components/ui/BaseInput.vue";
+import BaseBackground from "@/components/ui/BaseBackground.vue";
+import YellowSquare from "@/components/icons/YellowSquare.vue";
 export default {
   data() {
     return {
@@ -99,6 +99,7 @@ export default {
     AsteriskTip,
     BaseInput,
     BaseBackground,
+    YellowSquare,
   },
   methods: {
     changeName(e) {

@@ -98,7 +98,7 @@
             v-slot="{ field }"
             name="date"
             id="date"
-            rules="required:თარიღი"
+            rules="required"
             :value="covidSicknessDate"
             @input="changeCovidSicknessDate"
           >
@@ -122,11 +122,10 @@
       <base-background class="bg-covid-image"></base-background>
 
       <transition>
-        <img
+        <red-circle
           v-if="showLogo"
-          src="@/assets/red-bg.svg"
           class="opacity-80 absolute top-[400px] right-[750px]"
-        />
+        ></red-circle>
       </transition>
 
       <div class="flex justify-start">
@@ -144,18 +143,21 @@
 
 <script>
 import { Field, Form } from "vee-validate";
-import RadioWrapper from "../components/simplify/RadioWrapper.vue";
+import RadioWrapper from "@/components/simplify/RadioWrapper.vue";
 import BaseTitle from "@/components/ui/BaseTitle.vue";
 import BaseBackground from "@/components/ui/BaseBackground.vue";
 import BaseLink from "@/components/ui/BaseLink.vue";
+import RedCircle from "@/components/icons/RedCircle.vue";
 export default {
   components: {
+    // eslint-disable-next-line vue/no-reserved-component-names
     Form,
     Field,
     RadioWrapper,
     BaseTitle,
     BaseBackground,
     BaseLink,
+    RedCircle,
   },
   data() {
     return {

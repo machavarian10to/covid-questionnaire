@@ -7,6 +7,7 @@ import BaseButton from "@/components/ui/BaseButton.vue";
 import TheHeader from "@/components/layout/TheHeader.vue";
 
 import "@/config/vee-validate/rules";
+import "@/config/vee-validate/messages";
 
 import "@/index.css";
 

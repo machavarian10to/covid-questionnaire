@@ -8,6 +8,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@vee-validate/i18n": "^4.7.0",
     "@vee-validate/rules": "^4.7.0",
     "bpg-arial": "^1.0.0",
     "vee-validate": "^4.7.0",
