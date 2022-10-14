@@ -1,49 +1,39 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
   <div
-    class="
-      relative
-      bg-custom-image
-      w-[1920px]
-      h-[1080px]
-      bg-center bg-no-repeat bg-cover
-    "
+    class="relative bg-thanks-image w-[1920px] h-[1080px] bg-center bg-no-repeat bg-cover"
   >
     <div
       v-if="showText"
-      class="
-        text-white
-        absolute
-        top-[50%]
-        left-[50%]
-        translate-x-[-50%] translate-y-[-50%]
-      "
+      class="text-white absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"
     >
       <transition name="text">
         <h3 class="font-bold text-[64px] tracking-[16px]">მადლობა</h3>
       </transition>
 
       <transition name="top-star">
-        <img
+        <the-star
           v-if="showStars"
-          src="../assets/star.svg"
           class="w-[50px] h-[50px] absolute bottom-[100px] left-[40px]"
-        />
+        ></the-star>
       </transition>
 
       <transition name="bottom-star">
-        <img
+        <the-star
           v-if="showStars"
-          src="../assets/star.svg"
           class="w-[30px] h-[30px] absolute top-[100px] right-[40px]"
-        />
+        ></the-star>
       </transition>
     </div>
   </div>
 </template>
 
 <script>
+import TheStar from "@/components/icons/TheStar.vue";
 export default {
+  components: {
+    TheStar,
+  },
   data() {
     return {
       showText: false,

@@ -8,9 +8,13 @@ module.exports = {
       },
       colors: {
         "custom-color": "#EAEAEA",
+        "border-color": "#232323",
+        "error-color": "#F15524",
       },
       backgroundImage: {
-        "custom-image": "url('@/assets/thanks.svg')",
+        "thanks-image": "url('@/assets/thanks.svg')",
+        "identify-image": "url('@/assets/identify-img.svg')",
+        "covid-image": "url('@/assets/covid.svg')",
       },
     },
   },

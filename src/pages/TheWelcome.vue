@@ -1,19 +1,19 @@
 <template>
   <transition name="logo">
-    <img v-if="showLogo" src="../assets/start.svg" />
+    <start-logo v-if="showLogo"></start-logo>
   </transition>
 
   <div class="w-[1920px] h-[1080px] flex justify-center items-center">
     <div v-if="!showLogo">
       <div class="flex justify-center my-[100px]">
-        <img src="../assets/main_logo.svg" />
+        <main-logo></main-logo>
       </div>
 
       <div class="w-[160px] h-[100px] text-center">
         <transition name="text">
           <router-link
             v-if="showText"
-            to="/thanks"
+            :to="{ name: 'identify' }"
             class="font-bold text-[30px] hover:drop-shadow-[3px_2px_0px_rgba(150,150,150,1)]"
           >
             კითხვარის დაწყება
@@ -25,7 +25,10 @@
 </template>
 s
 <script>
+import MainLogo from "@/components/icons/MainLogo.vue";
+import StartLogo from "@/components/icons/StartLogo.vue";
 export default {
+  components: { MainLogo, StartLogo },
   data() {
     return {
       showLogo: true,
@@ -43,7 +46,6 @@ export default {
 };
 </script>
 
-
 <style scoped>
 .logo-leave-from {
   transform: scale(1);
@@ -56,7 +58,7 @@ export default {
   transform: scale(0.1);
 }
 .text-enter-from {
-  transform: translateY(550px);
+  transform: translateY(50px);
   opacity: 0;
 }
 .text-enter-to {
