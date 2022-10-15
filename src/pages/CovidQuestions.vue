@@ -129,7 +129,7 @@
       </transition>
 
       <div class="flex justify-start">
-        <base-link link="/identify"></base-link>
+        <base-link :link="{ name: 'identify' }"></base-link>
 
         <base-button
           @click="redirect"
@@ -176,7 +176,7 @@ export default {
       meta.valid ? (this.dataIsValid = true) : (this.dataIsValid = false);
     },
     redirect() {
-      this.$router.push("/");
+      this.$router.push({ name: "vaccine" });
     },
     changeAntibodiesDate(e) {
       this.$store.dispatch("changeAntibodiesDate", { value: e.target.value });

@@ -3,6 +3,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import TheWelcome from "@/pages/TheWelcome.vue";
 import UserIdentify from "@/pages/UserIdentify.vue";
 import CovidQuestions from "@/pages/CovidQuestions.vue";
+import CovidVaccine from "@/pages/CovidVaccine.vue";
+import CovidPolicy from "@/pages/CovidPolicy.vue";
 import TheThanks from "@/pages/TheThanks.vue";
 
 const router = createRouter({
@@ -22,6 +24,16 @@ const router = createRouter({
       path: "/covid",
       name: "covid",
       component: CovidQuestions,
+    },
+    {
+      path: "/vaccine",
+      name: "vaccine",
+      component: CovidVaccine,
+    },
+    {
+      path: "/policy",
+      name: "policy",
+      component: CovidPolicy,
     },
     {
       path: "/thanks",
