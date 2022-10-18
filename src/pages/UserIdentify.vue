@@ -9,8 +9,7 @@
             type="text"
             rules="required|min:3|max:255|alpha"
             :class="inputStyling"
-            :value="name"
-            @input="changeName"
+            v-model="name"
           />
           <ErrorMessage class="text-error-color" name="name" />
         </base-input>
@@ -22,8 +21,7 @@
             type="text"
             rules="required|min:3|max:255|alpha"
             :class="inputStyling"
-            :value="surname"
-            @input="changeLastName"
+            v-model="surname"
           />
           <ErrorMessage class="text-error-color" name="surname" />
         </base-input>
@@ -35,8 +33,7 @@
             type="email"
             rules="required|email|redberry_email"
             :class="inputStyling"
-            :value="email"
-            @input="changeEmail"
+            v-model="email"
           />
           <ErrorMessage class="text-error-color" name="email" />
         </base-input>
@@ -79,9 +76,9 @@ export default {
     return {
       userIdentified: false,
       showLogo: false,
-      name: this.$store.getters.getName,
-      surname: this.$store.getters.getLastName,
-      email: this.$store.getters.getEmail,
+      name: this.$store.state.identify.first_name,
+      surname: this.$store.state.identify.last_name,
+      email: this.$store.state.identify.email,
     };
   },
   computed: {
@@ -102,19 +99,15 @@ export default {
     YellowSquare,
   },
   methods: {
-    changeName(e) {
-      this.$store.dispatch("changeName", { value: e.target.value });
-    },
-    changeLastName(e) {
-      this.$store.dispatch("changeLastName", { value: e.target.value });
-    },
-    changeEmail(e) {
-      this.$store.dispatch("changeEmail", { value: e.target.value });
-    },
     checkIfUserIdentify(meta) {
       meta.valid ? (this.userIdentified = true) : (this.userIdentified = false);
     },
     redirect() {
+      this.$store.dispatch("setData", {
+        name: this.name,
+        surname: this.surname,
+        email: this.email,
+      });
       return this.$router.push({ name: "covid" });
     },
   },

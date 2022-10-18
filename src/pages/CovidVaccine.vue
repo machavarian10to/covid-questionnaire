@@ -3,151 +3,29 @@
     <div>
       <div>
         <base-title title="უკვე აცრილი ხარ?*"></base-title>
-        <radio-wrapper id="vaccine_yes" label="კი">
-          <input
-            type="radio"
-            name="vaccine"
-            id="vaccine_yes"
-            :value="true"
-            v-model="hadVaccine"
-            class="w-[23px] h-[23px]"
-          />
-        </radio-wrapper>
-
-        <radio-wrapper id="vaccine_no" label="არა">
-          <input
-            type="radio"
-            name="vaccine"
-            id="vaccine_no"
-            :value="false"
-            v-model="hadVaccine"
-            class="w-[23px] h-[23px]"
-          />
-        </radio-wrapper>
+        <radio-input v-model="hadVaccine" :options="vaccine"></radio-input>
       </div>
 
-      <div v-if="hadVaccine === true">
+      <div v-if="hadVaccine === 'true'">
         <base-title title="აირჩიე რა ეტაპზე ხარ*"></base-title>
-        <radio-wrapper
-          id="first"
-          label="პირველი დოზა და დარეგისტრირებული ვარ მეორეზე"
-        >
-          <input
-            type="radio"
-            name="stage"
-            id="first"
-            value="first_dosage_and_registered_on_the_second"
-            v-model="vaccineStage"
-            class="w-[23px] h-[23px]"
-          />
-        </radio-wrapper>
-
-        <radio-wrapper id="fully" label="სრულად აცრილი ვარ">
-          <input
-            type="radio"
-            name="stage"
-            id="fully"
-            value="fully_vaccinated"
-            v-model="vaccineStage"
-            class="w-[23px] h-[23px]"
-          />
-        </radio-wrapper>
-
-        <radio-wrapper
-          id="not_second"
-          label="პირველი დოზა და არ დავრეგისტრირებულვარ მეორეზე"
-        >
-          <input
-            type="radio"
-            name="stage"
-            id="not_second"
-            value="first_dosage_and_not_registered_yet"
-            v-model="vaccineStage"
-            class="w-[23px] h-[23px]"
-          />
-        </radio-wrapper>
+        <radio-input v-model="vaccineStage" :options="stage"></radio-input>
       </div>
 
-      <div
+      <vaccine-link
         v-if="
-          hadVaccine === true &&
+          hadVaccine === 'true' &&
           vaccineStage === 'first_dosage_and_not_registered_yet'
         "
-        class="mt-12 ml-16 text-[20px]"
-      >
-        <div>
-          <p>რომ არ გადადო,</p>
-          <p>ბარემ ახლავე დარეგისტრირდი</p>
-          <a
-            href="https://booking.moh.gov.ge/"
-            target="_blank"
-            class="text-link-color"
-            >https://booking.moh.gov.ge/</a
-          >
-        </div>
-      </div>
+      ></vaccine-link>
 
-      <div v-if="hadVaccine === false">
+      <div v-if="hadVaccine === 'false'">
         <base-title title="რას ელოდები?*"></base-title>
-        <radio-wrapper
-          id="vaccine_date"
-          label="დარეგისტრირებული ვარ და ველოდები რიცხვს"
-        >
-          <input
-            type="radio"
-            name="waiting"
-            id="vaccine_date"
-            value="waiting_date"
-            v-model="waitingReason"
-            class="w-[23px] h-[23px]"
-          />
-        </radio-wrapper>
-
-        <radio-wrapper id="no_vaccinate" label="არ ვგეგმავ">
-          <input
-            type="radio"
-            name="waiting"
-            id="no_vaccinate"
-            value="waiting_nothing"
-            v-model="waitingReason"
-            class="w-[23px] h-[23px]"
-          />
-        </radio-wrapper>
-
-        <radio-wrapper
-          id="vaccine_plan"
-          label="გადატანილი მაქვს და ვგეგმავ აცრას"
-        >
-          <input
-            type="radio"
-            name="waiting"
-            id="vaccine_plan"
-            value="waiting_plan"
-            v-model="waitingReason"
-            class="w-[23px] h-[23px]"
-          />
-        </radio-wrapper>
+        <radio-input v-model="waitingReason" :options="reason"></radio-input>
       </div>
 
-      <div
-        v-if="hadVaccine === false && waitingReason === 'waiting_plan'"
-        class="mt-12 ml-16 text-[20px]"
-      >
-        <div>
-          <p>ახალი პროტოკოლით კოვიდის გადატანიდან 1</p>
-          <p>თვის შემდეგ შეგიძლიათ ვაქცინის გაკეთება.</p>
-
-          <div class="mt-8">
-            <p>👉 რეგისტრაციის ბმული</p>
-            <a
-              href="https://booking.moh.gov.ge/"
-              target="_blank"
-              class="text-link-color"
-              >https://booking.moh.gov.ge/</a
-            >
-          </div>
-        </div>
-      </div>
+      <register-vaccine
+        v-if="hadVaccine === 'false' && waitingReason === 'waiting_plan'"
+      ></register-vaccine>
     </div>
 
     <div class="mt-20">
@@ -177,13 +55,72 @@
 import BaseLink from "@/components/ui/BaseLink.vue";
 import BaseTitle from "@/components/ui/BaseTitle.vue";
 import YellowStar from "@/components/icons/YellowStar.vue";
-import RadioWrapper from "@/components/simplify/RadioWrapper.vue";
 import BaseBackground from "@/components/ui/BaseBackground.vue";
+import RadioInput from "@/components/simplify/RadioInput.vue";
+import VaccineLink from "@/components/simplify/VaccineLink.vue";
+import RegisterVaccine from "../components/simplify/RegisterVaccine.vue";
 
 export default {
   data() {
     return {
       showLogo: false,
+      hadVaccine: this.$store.state.vaccine.had_vaccine,
+      vaccineStage: this.$store.state.vaccine.vaccination_stage,
+      waitingReason: this.$store.state.vaccine.i_am_waiting,
+      vaccine: [
+        {
+          name: "vaccine",
+          value: true,
+          id: "vaccine_yes",
+          label: "კი",
+        },
+        {
+          name: "vaccine",
+          value: false,
+          id: "vaccine_no",
+          label: "არა",
+        },
+      ],
+      stage: [
+        {
+          name: "stage",
+          value: "first_dosage_and_registered_on_the_second",
+          id: "first",
+          label: "პირველი დოზა და დარეგისტრირებული ვარ მეორეზე",
+        },
+        {
+          name: "stage",
+          value: "fully_vaccinated",
+          id: "fully",
+          label: "სრულად აცრილი ვარ",
+        },
+        {
+          name: "stage",
+          value: "first_dosage_and_not_registered_yet",
+          id: "not_second",
+          label: "პირველი დოზა და არ დავრეგისტრირებულვარ მეორეზე",
+        },
+      ],
+      reason: [
+        {
+          name: "waiting",
+          value: "waiting_date",
+          id: "vaccine_date",
+          label: "დარეგისტრირებული ვარ და ველოდები რიცხვს",
+        },
+        {
+          name: "waiting",
+          value: "waiting_nothing",
+          id: "no_vaccinate",
+          label: "არ ვგეგმავ",
+        },
+        {
+          name: "waiting",
+          value: "waiting_plan",
+          id: "vaccine_plan",
+          label: "გადატანილი მაქვს და ვგეგმავ აცრას",
+        },
+      ],
     };
   },
   mounted() {
@@ -191,39 +128,20 @@ export default {
   },
   methods: {
     redirect() {
+      this.$store.dispatch("setData", {
+        vaccine: this.hadVaccine,
+        stage: this.vaccineStage,
+        reason: this.waitingReason,
+      });
       this.$router.push({ name: "policy" });
     },
   },
   computed: {
-    hadVaccine: {
-      get() {
-        return this.$store.getters.getVaccine;
-      },
-      set(value) {
-        this.$store.dispatch("setVaccine", value);
-      },
-    },
-    vaccineStage: {
-      get() {
-        return this.$store.getters.getStage;
-      },
-      set(value) {
-        this.$store.dispatch("setStage", value);
-      },
-    },
-    waitingReason: {
-      get() {
-        return this.$store.getters.getReason;
-      },
-      set(value) {
-        this.$store.dispatch("setReason", value);
-      },
-    },
     questionsAnswered() {
-      if (this.hadVaccine && this.vaccineStage) {
+      if (this.hadVaccine === "true" && this.vaccineStage) {
         return true;
       }
-      if (!this.hadVaccine && this.waitingReason) {
+      if (this.hadVaccine === "false" && this.waitingReason) {
         return true;
       }
       return false;
@@ -233,8 +151,10 @@ export default {
     BaseLink,
     BaseTitle,
     YellowStar,
-    RadioWrapper,
+    RadioInput,
     BaseBackground,
+    VaccineLink,
+    RegisterVaccine,
   },
 };
 </script>

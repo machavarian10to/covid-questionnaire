@@ -73,16 +73,14 @@
           placeholder="რიცხვი"
           onfocus="(this.type='date')"
           :class="inputStyling"
-          :value="antibodiesDate"
-          @input="changeAntibodiesDate"
+          v-model="antibodiesDate"
         />
         <input
           id="antibodies-number"
           type="number"
           placeholder="ანტისხეულების რაოდენობა"
           :class="inputStyling"
-          :value="antibodiesNumber"
-          @input="changeAntibodiesNumber"
+          v-model="antibodiesNumber"
         />
       </div>
 
@@ -99,8 +97,7 @@
             name="date"
             id="date"
             rules="required"
-            :value="covidSicknessDate"
-            @input="changeCovidSicknessDate"
+            v-model="covidSicknessDate"
           >
             <input
               v-bind="field"
@@ -163,9 +160,11 @@ export default {
     return {
       showLogo: false,
       dataIsValid: false,
-      antibodiesDate: this.$store.getters.getAntibodiesDate,
-      antibodiesNumber: this.$store.getters.getAntibodiesNumber,
-      covidSicknessDate: this.$store.getters.getCovidSicknessDate,
+      hadCovid: this.$store.state.covid.had_covid,
+      hadTest: this.$store.state.covid.had_antibody_test,
+      antibodiesDate: this.$store.state.covid.antibodies.test_date,
+      antibodiesNumber: this.$store.state.covid.antibodies.number,
+      covidSicknessDate: this.$store.state.covid.covid_sickness_date,
     };
   },
   mounted() {
@@ -176,39 +175,19 @@ export default {
       meta.valid ? (this.dataIsValid = true) : (this.dataIsValid = false);
     },
     redirect() {
-      this.$router.push({ name: "vaccine" });
-    },
-    changeAntibodiesDate(e) {
-      this.$store.dispatch("changeAntibodiesDate", { value: e.target.value });
-    },
-    changeAntibodiesNumber(e) {
-      this.$store.dispatch("changeAntibodiesNumber", { value: e.target.value });
-    },
-    changeCovidSicknessDate(e) {
-      this.$store.dispatch("changeCovidSicknessDate", {
-        value: e.target.value,
+      this.$store.dispatch("setData", {
+        covid: this.hadCovid,
+        test: this.hadTest,
+        antibodiesDate: this.antibodiesDate,
+        antibodiesNum: this.antibodiesNumber,
+        sicknessDate: this.covidSicknessDate,
       });
+      this.$router.push({ name: "vaccine" });
     },
   },
   computed: {
     inputStyling() {
       return "w-[515px] h-[50px] border-[1px] border-border-color bg-transparent focus:outline-none indent-4 text-[18px] mt-10 ml-5";
-    },
-    hadCovid: {
-      get() {
-        return this.$store.getters.getCovid;
-      },
-      set(value) {
-        this.$store.dispatch("setCovid", value);
-      },
-    },
-    hadTest: {
-      get() {
-        return this.$store.getters.getTest;
-      },
-      set(value) {
-        this.$store.dispatch("setTest", value);
-      },
     },
     questionsAnswered() {
       if (this.hadCovid === "no" || this.hadCovid === "have_right_now") {
