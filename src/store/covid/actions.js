@@ -1,5 +1,5 @@
 export default {
-  setData(context, payload) {
-    context.commit("setData", payload);
+  setCovid(context, payload) {
+    context.commit("setCovid", payload);
   },
 };

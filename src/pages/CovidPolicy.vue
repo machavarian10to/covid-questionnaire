@@ -91,7 +91,7 @@ export default {
       meetingsAmount: this.$store.state.policy.non_formal_meetings,
       officeMeetings: this.$store.state.policy.number_of_days_from_office,
       liveMeetings: this.$store.state.policy.what_about_meetings_in_live,
-      userOpinion: this.$store.getters.getOpinion,
+      userOpinion: this.$store.state.policy.tell_us_your_opinion_about_us,
       nonFormal: [
         {
           name: "meetings",
@@ -163,31 +163,23 @@ export default {
   },
   methods: {
     submitData() {
-      // const data = this.$store.state.data;
+      this.$store.dispatch("setPolicy", {
+        meetingsAmount: this.meetingsAmount,
+        officeMeetings: this.officeMeetings,
+        liveMeetings: this.liveMeetings,
+        userOpinion: this.userOpinion,
+      });
+      const states = this.$store.state;
       fetch("https://covid19.devtest.ge/api/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        // body: JSON.stringify(data),
         body: JSON.stringify({
-          first_name: this.$store.state.identify.first_name,
-          last_name: this.$store.state.identify.last_name,
-          email: this.$store.state.identify.email,
-          had_covid: this.$store.state.covid.had_covid,
-          had_antibody_test: this.$store.state.covid.had_antibody_test,
-          covid_sickness_date: this.$store.state.covid.covid_sickness_date,
-          antibodies: {
-            test_date: this.$store.state.covid.antibodies.test_date,
-            number: this.$store.state.covid.antibodies.number,
-          },
-          had_vaccine: this.$store.state.vaccine.had_vaccine,
-          vaccination_stage: this.$store.state.vaccine.vaccination_stage,
-          i_am_waiting: this.$store.state.vaccine.i_am_waiting,
-          non_formal_meetings: this.$store.state.policy.non_formal_meetings,
-          number_of_days_from_office: this.$store.state.policy.number_of_days_from_office,
-          what_about_meetings_in_live: this.$store.state.policy.what_about_meetings_in_live,
-          tell_us_your_opinion_about_us: this.$store.state.policy.tell_us_your_opinion_about_us,
+          ...states.identify,
+          ...states.covid,
+          ...states.vaccine,
+          ...states.policy,
         }),
       })
         .then((res) => console.log(res))

@@ -1,5 +1,5 @@
 export default {
-  setData(context, payload) {
-    context.commit("setData", payload);
+  setIdentify(context, payload) {
+    context.commit("setIdentify", payload);
   },
 };

@@ -103,7 +103,7 @@ export default {
       meta.valid ? (this.userIdentified = true) : (this.userIdentified = false);
     },
     redirect() {
-      this.$store.dispatch("setData", {
+      this.$store.dispatch("setIdentify", {
         name: this.name,
         surname: this.surname,
         email: this.email,

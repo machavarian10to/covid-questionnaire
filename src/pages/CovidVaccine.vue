@@ -128,7 +128,7 @@ export default {
   },
   methods: {
     redirect() {
-      this.$store.dispatch("setData", {
+      this.$store.dispatch("setVaccine", {
         vaccine: this.hadVaccine,
         stage: this.vaccineStage,
         reason: this.waitingReason,

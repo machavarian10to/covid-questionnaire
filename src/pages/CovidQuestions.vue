@@ -175,7 +175,7 @@ export default {
       meta.valid ? (this.dataIsValid = true) : (this.dataIsValid = false);
     },
     redirect() {
-      this.$store.dispatch("setData", {
+      this.$store.dispatch("setCovid", {
         covid: this.hadCovid,
         test: this.hadTest,
         antibodiesDate: this.antibodiesDate,
