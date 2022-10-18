@@ -4,9 +4,10 @@ import actions from "./actions.js";
 export default {
   state() {
     return {
-      first_name: "",
-      last_name: "",
-      email: "",
+      non_formal_meetings: "",
+      number_of_days_from_office: null,
+      what_about_meetings_in_live: "",
+      tell_us_your_opinion_about_us: "",
     };
   },
   mutations: mutations,

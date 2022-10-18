@@ -4,9 +4,9 @@ import actions from "./actions.js";
 export default {
   state() {
     return {
-      first_name: "",
-      last_name: "",
-      email: "",
+      had_vaccine: null,
+      vaccination_stage: "",
+      i_am_waiting: "",
     };
   },
   mutations: mutations,
